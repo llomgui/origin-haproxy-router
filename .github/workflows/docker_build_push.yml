@@ -1,0 +1,19 @@
+name: 'Docker build & push'
+
+on: [push]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v1.0
+      - name: Build & push
+        uses: mr-smithers-excellent/docker-build-push@v3
+        with:
+          image: llomgui/origin-haproxy-router
+          tag: latest
+          registry: docker.io
+          buildArgs: HAPROXY_VERSION=1.8.25
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
